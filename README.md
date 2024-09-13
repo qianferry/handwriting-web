@@ -43,6 +43,52 @@
 
 若要添加字体，字体文件放在项目根目录下的 ttf_files 中
 
+## 系统环境
+虚拟机初始化
+```
+sudo yum install -y openssh-server
+vi /etc/ssh/sshd_config
+Port 22：定义 SSH 监听的端口号，默认为 22。
+ListenAddress 0.0.0.0
+PermitRootLogin yes：设置是否允许 root 登录，默认允许。
+PasswordAuthentication yes：设置是否使用口令认证方式，若要使用公钥认证方式，可将其设置为 no。
+
+sudo systemctl start sshd
+sudo systemctl enable sshd
+sudo systemctl status sshd
+sudo firewall-cmd --permanent --add-service=ssh
+sudo firewall-cmd --reload
+
+ip a
+
+重启
+
+```
+
+
+Python 3.9.19
+```shell
+su -
+
+sudo dnf update
+wget https://www.python.org/ftp/python/3.9.19/Python-3.9.19.tgz
+tar -xzf Python-3.9.19.tgz
+
+cd Python-3.9.19
+./configure --enable-optimizations
+make altinstall
+
+sudo ln -s /usr/local/bin/python3.9 /usr/bin/python3
+sudo ln -s /usr/local/bin/pip3.9 /usr/bin/pip3
+
+python3 --version
+pip3 --version
+
+
+```
+系统：CentOS 8.0.1905 x86_64
+- https://archive.kernel.org/centos-vault/8.0.1905/isos/x86_64/
+- 选择 CentOS-8-x86_64-1905-dvd1.iso
 
 
 ## 本地运行
