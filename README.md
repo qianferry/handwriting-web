@@ -143,6 +143,10 @@ trusted-host = mirrors.aliyun.com
 - https://archive.kernel.org/centos-vault/8.0.1905/isos/x86_64/
 - 选择 CentOS-8-x86_64-1905-dvd1.iso
 
+node
+```
+安装Node.js v18.20.4
+```
 
 ## 本地运行
 1. 克隆项目到本地
