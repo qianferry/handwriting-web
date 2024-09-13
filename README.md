@@ -65,26 +65,79 @@ ip a
 
 ```
 
+更换YUM源为国内源
+```
+备份原有的YUM源配置：
+bash
+cd /etc/yum.repos.d/
+mkdir backup && mv *repo backup/
+
+下载阿里云的YUM源配置：
+bash
+wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-8.repo
+
+清除YUM缓存并生成新的缓存：
+bash
+yum clean all
+yum makecache
+
+验证当前配置的YUM源：
+bash
+yum repolist all
+```
 
 Python 3.9.19
 ```shell
+
+
 su -
 
 sudo dnf update
+
+下载 Python 3.9.19 源码包
+bash
 wget https://www.python.org/ftp/python/3.9.19/Python-3.9.19.tgz
+
+3. 解压源码包
+bash
 tar -xzf Python-3.9.19.tgz
 
+4. 创建安装目录
+bash
+mkdir /usr/local/python3
+
+5. 编译安装 Python 3.9.19
+bash
 cd Python-3.9.19
-./configure --enable-optimizations
-make altinstall
+./configure --prefix=/usr/local/python3 --enable-optimizations
+make && make altinstall
 
-sudo ln -s /usr/local/bin/python3.9 /usr/bin/python3
-sudo ln -s /usr/local/bin/pip3.9 /usr/bin/pip3
+--prefix指定安装路径，--enable-optimizations可以提高 10-20% 的性能。
+使用 make altinstall 而不是 make install，可以避免覆盖系统自带的 Python 2.x。
+6. 创建软链接
+bash
+ln -s /usr/local/python3/bin/python3.9 /usr/bin/python39
+ln -s /usr/local/python3/bin/pip3.9 /usr/bin/pip39
 
-python3 --version
-pip3 --version
+7. 验证安装
+bash
+python39 --version
+pip39 --version
 
+出现版本号说明安装成功。
+8. 配置 pip 国内源
+bash
+mkdir ~/.pip
+vim ~/.pip/pip.conf
 
+添加以下内容:
+text
+[global]
+index-url = https://mirrors.aliyun.com/pypi/simple/
+[install]
+trusted-host = mirrors.aliyun.com
+
+保存后即可使用国内源安装 Python 包。
 ```
 系统：CentOS 8.0.1905 x86_64
 - https://archive.kernel.org/centos-vault/8.0.1905/isos/x86_64/
